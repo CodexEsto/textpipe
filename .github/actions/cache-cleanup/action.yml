@@ -1,0 +1,9 @@
+name: 'Cache Cleanup'
+description: 'Clean up caches to free space'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Clean up cache
+      run: |
+        rm -rf ~/.cache  # Clean up the cache directory (customize if needed)
