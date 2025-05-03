@@ -7,6 +7,11 @@ PYTHONPATH := $(shell pwd)
 test:
 	PYTHONPATH=$(PYTHONPATH) python3 -m pytest tests
 
+# Run tests with coverage report
+# Run tests with HTML coverage report
+coverage-html:
+	PYTHONPATH=$(PYTHONPATH) python3 -m pytest --cov=textpipe --cov-report=html tests
+
 # Run a specific test file: make test-file file=tests/data/test_tokenizer.py
 test-file:
 	PYTHONPATH=$(PYTHONPATH) python3 $(file)
@@ -42,4 +47,4 @@ clean:
 	find . -type d -name '*.egg-info' -exec rm -r {} +
 	find . -type f \( -name '*.log' -o -name '.coverage' -o -name '*.pdb' \) -delete
 
-.PHONY: test test-file lint format docs clean
+.PHONY: test test-file coverage lint format docs clean

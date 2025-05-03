@@ -1,38 +1,41 @@
 import re
-import string
+
 
 def clean_text(text):
     """
-    Clean the input text by removing punctuation, converting to lowercase, and stripping extra spaces.
+    Clean the input text by removing punctuation (except apostrophes), converting to lowercase,
+    and normalizing whitespace.
 
-    :param text: str, input raw text
-    :return: str, cleaned text
-    :example:
-    >>> clean_text("Hello, world! How's it going?")
-    'hello world hows it going'
+    :param str text: Input raw text
+    :return: Cleaned text with consistent formatting
+    :rtype: str
+
+    Example:
+        >>> clean_text("Hello, world! How's it going?")
+        'hello world how's it going'
+        >>> clean_text("   Space   and   punctuation!   ")
+        'space and punctuation'
     """
     text = text.lower()
-    text = re.sub(r'[^\w\s]', '', text)  # Remove punctuation
-    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single one
-    return text.strip()  # Remove leading/trailing spaces
+    text = re.sub(r"[^\w\s']", "", text)  # Keep apostrophes
+    text = re.sub(r"\s+", " ", text)  # Normalize whitespace
+    return text.strip()
 
 
-
-# def clean_text(text):
-#     text = re.sub(r'[^a-z\s]', '', text)  # Remove punctuation
-#     text = re.sub(r'\s+', ' ', text)      # Normalize spaces
-#     return text.strip()  
 def remove_stopwords(text, stopwords):
     """
-    Remove stopwords from the text.
+    Remove stopwords from text while preserving original word order.
 
-    :param text: str, input text
-    :param stopwords: set, set of stopwords to be removed
-    :return: str, text without stopwords
-    :example:
-    >>> stopwords = {"is", "the", "in", "a", "to"}
-    >>> remove_stopwords("This is a sample text", stopwords)
-    'sample text'
+    :param str text: Input text to process
+    :param set stopwords: Set of stopwords to remove
+    :return: Text with stopwords removed
+    :rtype: str
+
+    Example:
+        >>> stopwords = {"is", "the", "in", "a", "to"}
+        >>> remove_stopwords("This is a sample text", stopwords)
+        'sample text'
     """
-    words = text.split()
-    return ' '.join([word for word in words if word.lower() not in stopwords])
+    words = clean_text(text).split()
+    lower_stopwords = {s.lower() for s in stopwords}
+    return " ".join([word for word in words if word not in lower_stopwords])

@@ -1,56 +1,54 @@
 import re
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import TweetTokenizer
-import string
+from nltk.tokenize import word_tokenize, TweetTokenizer
+
 
 def basic_tokenizer(text):
     """
-    Tokenizes the input text by splitting on spaces and handling basic punctuation.
+    Tokenizes text by:
+    - Lowercasing
+    - Splitting contractions via apostrophes
+    - Preserving @ and # symbols
+    - Splitting on spaces
 
-    Args:
-        text (str): The input text to tokenize.
+    :param str text: Input text to tokenize
+    :return: List of tokens
+    :rtype: list
 
-    Returns:
-        list: A list of tokens (words).
-    
     Example:
-    >>> basic_tokenizer("Hello, world!")
-    ['hello', 'world']
+        >>> basic_tokenizer("Python's great, isn't it?")
+        ['python', 's', 'great', 'isn', 't', 'it']
     """
-    # Lowercase the text and remove punctuation
     text = text.lower()
-    text = re.sub(r'[^\w\s]', '', text)
+    text = re.sub(r"['’]", " ", text)  # Split contractions
+    text = re.sub(r"[^\w\s@#]", "", text)  # Remove unwanted chars
     return text.split()
+
 
 def nltk_tokenizer(text):
     """
-    Tokenizes the input text using NLTK's word_tokenize function.
+    Tokenizes text using NLTK's word_tokenize with pre-configured resources.
 
-    Args:
-        text (str): The input text to tokenize.
+    :param str text: Input text to tokenize
+    :return: List of tokens
+    :rtype: list
 
-    Returns:
-        list: A list of tokens (words).
-    
     Example:
-    >>> nltk_tokenizer("Hello, world!")
-    ['Hello', ',', 'world', '!']
+        >>> nltk_tokenizer("Hello, world!")
+        ['Hello', ',', 'world', '!']
     """
     return word_tokenize(text)
 
+
 def tweet_tokenizer(text):
     """
-    Tokenizes the input text using NLTK's TweetTokenizer (handles hashtags, mentions).
+    Tokenizes text using NLTK's TweetTokenizer.
 
-    Args:
-        text (str): The input text to tokenize.
+    :param str text: Input text to tokenize
+    :return: List of tokens
+    :rtype: list
 
-    Returns:
-        list: A list of tokens (words, hashtags, mentions).
-    
     Example:
-    >>> tweet_tokenizer("Hello @user, check #Python!")
-    ['Hello', '@user', ',', 'check', '#Python', '!']
+        >>> tweet_tokenizer("Hello @user, check #Python!")
+        ['Hello', '@user', ',', 'check', '#Python', '!']
     """
-    tokenizer = TweetTokenizer()
-    return tokenizer.tokenize(text)
+    return TweetTokenizer().tokenize(text)

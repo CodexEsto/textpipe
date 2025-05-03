@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import os
 
+
 def load_csv(file_path):
     """
     Load a CSV file into a pandas DataFrame.
@@ -15,6 +16,7 @@ def load_csv(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
     return pd.read_csv(file_path)
 
+
 def load_json(file_path):
     """
     Load a JSON file into a Python dictionary.
@@ -26,8 +28,9 @@ def load_json(file_path):
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         return json.load(file)
+
 
 def load_txt(file_path):
     """
@@ -40,8 +43,9 @@ def load_txt(file_path):
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         return file.readlines()
+
 
 def load_html(file_path):
     """
@@ -54,8 +58,8 @@ def load_html(file_path):
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         from bs4 import BeautifulSoup
-        soup = BeautifulSoup(file, 'html.parser')
+
+        soup = BeautifulSoup(file, "html.parser")
         return soup.get_text()
-    

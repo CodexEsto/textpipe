@@ -1,0 +1,21 @@
+textpipe.config package
+=======================
+
+Submodules
+----------
+
+textpipe.config.nltk module
+---------------------------
+
+.. automodule:: textpipe.config.nltk
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: textpipe.config
+   :members:
+   :show-inheritance:
+   :undoc-members:

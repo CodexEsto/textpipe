@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 from textpipe.data.vectorizer import vectorize_tfidf, reduce_dimensions
 
+
 def test_vectorize_tfidf():
     """Test TF-IDF vectorization."""
     texts = ["This is a comment", "Another comment"]
@@ -20,10 +21,12 @@ def test_reduce_dimensions():
     "texts, max_features, expected_shape",
     [
         (["This is a comment", "Another comment"], 5, (2, 5)),
-        (["Short text", "Longer text here"], 3, (2, 3))
-    ]
+        (["Short text", "Longer text here"], 3, (2, 3)),
+    ],
 )
 def test_tfidf_with_max_features(texts, max_features, expected_shape):
     """Test TF-IDF with max_features parameter."""
     vectors = vectorize_tfidf(texts, max_features=max_features)
-    assert vectors.shape == expected_shape, f"Expected shape {expected_shape}, got {vectors.shape}"
+    assert vectors.shape == expected_shape, (
+        f"Expected shape {expected_shape}, got {vectors.shape}"
+    )

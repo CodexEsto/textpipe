@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
-import numpy as np
+
 
 def vectorize_tfidf(texts, max_features=1000):
     """
@@ -13,8 +13,12 @@ def vectorize_tfidf(texts, max_features=1000):
     >>> vectorize_tfidf(["This is a comment", "Another comment"]).shape
     (2, 7)
     """
-    vectorizer = TfidfVectorizer(max_features=max_features)
+    vectorizer = TfidfVectorizer(
+        max_features=max_features,
+        ngram_range=(1, 2),  # Key fix: include bigrams
+    )
     return vectorizer.fit_transform(texts).toarray()
+
 
 def reduce_dimensions(vectors, n_components=2):
     """
