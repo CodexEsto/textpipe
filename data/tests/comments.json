@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "username": "alice",
+      "comment": "Great post!",
+      "date": "2023-11-01"
+    },
+    {
+      "id": 2,
+      "username": "bob",
+      "comment": "I totally agree with you.",
+      "date": "2023-11-02"
+    },
+    {
+      "id": 3,
+      "username": "charlie",
+      "comment": "Needs more details.",
+      "date": "2023-11-03"
+    },
+    {
+      "id": 4,
+      "username": "dana",
+      "comment": "Thanks for sharing!",
+      "date": "2023-11-04"
+    }
+  ]
+  
