@@ -1,0 +1,31 @@
+site_name: TextPipe
+site_url: https://example.com
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.expand
+    - navigation.sections
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs.sticky
+    - navigation.search.highlight
+    - navigation.search.suggest
+    - navigation.search.suggest.auto
+    - navigation.search.suggest.auto.complete
+    - navigation.search.suggest.auto.complete.delay: 300ms
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [.]
+nav:
+  - Home: index.md
+  # - About: about.md
+  - API Reference:
+      - MyModule: api/textpipe.md
+  # - Guides:
+  #     - Getting Started: guides/getting-started.md
+  #     - Advanced Topics: guides/advanced-topics.md
