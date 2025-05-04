@@ -10,7 +10,8 @@ dependencies = [
   "scikit-learn",
   "nltk",
   "sphinx",
-  "pytest"
+  "pytest",
+  "pandas"
 ]
 
 [build-system]

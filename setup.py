@@ -7,6 +7,7 @@ setup(
     install_requires=[
         "scikit-learn",
         "nltk",
+        "pandas",
         "sphinx",
         "pytest",  # Usually listed under extras, but fine here too
     ],
