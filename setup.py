@@ -9,6 +9,8 @@ setup(
         "nltk",
         "pandas",
         "sphinx",
+        "bs4",
+        "beautifulsoup4",
         "pytest",  # Usually listed under extras, but fine here too
     ],
     author="Your Name",

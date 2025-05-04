@@ -2,3 +2,6 @@ scikit-learn
 pytest
 pytest-cov
 pandas
+bs4
+requests
+numpy

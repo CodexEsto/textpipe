@@ -11,7 +11,8 @@ dependencies = [
   "nltk",
   "sphinx",
   "pytest",
-  "pandas"
+  "pandas",
+  "bs4"
 ]
 
 [build-system]
