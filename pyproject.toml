@@ -1,0 +1,18 @@
+[project]
+name = "textpipe"
+version = "0.1.0"
+description = "all in one tool for text tokenization and vectorization"
+authors = [
+  { name="CodexEsto", email="codexesto@gmail.com" }
+]
+requires-python = ">=3.7"
+dependencies = [
+  "scikit-learn",
+  "nltk",
+  "sphinx",
+  "pytest"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
