@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/CodexEsto/textpipe">
-    <img src="images/logo.png" alt="Logo" width="120" height="140">
+    <img src="assets/textpipeRB.png" alt="Logo" width="230" height="150">
   </a>
 
   <h3 align="center">textpipe</h3>

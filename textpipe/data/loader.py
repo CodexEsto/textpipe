@@ -1,65 +1,49 @@
+"""Enhanced data loader with config-aware processing."""
+
 import pandas as pd
-import json
-import os
+from ..utils.logger import logger
+from ..config.config import Config
+
+config = Config.get()
 
 
-def load_csv(file_path):
-    """
-    Load a CSV file into a pandas DataFrame.
+def load_csv(path, text_column="text", label_column="label"):
+    """Load and pre-process CSV data with type validation."""
+    try:
+        df = pd.read_csv(path)
 
-    :param file_path: str, path to the CSV file
-    :return: pd.DataFrame, loaded CSV data
-    :example:
-    >>> load_csv('data/comments.csv').head()
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
-    return pd.read_csv(file_path)
+        # Handle missing values based on config
+        if config.handle_nan == "drop":
+            df = df.dropna(subset=[text_column])
+        else:
+            df[text_column] = df[text_column].fillna("")
 
+        # Convert to strings and clean invalid characters
+        df[text_column] = (
+            df[text_column]
+            .astype(str)
+            .apply(lambda x: x.encode("ascii", "ignore").decode().strip())
+        )
 
-def load_json(file_path):
-    """
-    Load a JSON file into a Python dictionary.
+        texts = df[text_column].tolist()
+        labels = df[label_column].tolist() if label_column in df.columns else None
 
-    :param file_path: str, path to the JSON file
-    :return: dict, loaded JSON data
-    :example:
-    >>> load_json('data/comments.json')['comments'][0]
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, "r") as file:
-        return json.load(file)
+        logger.info(f"Loaded {len(texts)} documents from {path}")
+        return (texts, labels) if labels else texts
 
-
-def load_txt(file_path):
-    """
-    Load a plain text file.
-
-    :param file_path: str, path to the text file
-    :return: list, each line in the text file
-    :example:
-    >>> load_txt('data/comments.txt')[:2]
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, "r") as file:
-        return file.readlines()
+    except Exception as e:
+        logger.error(f"Error loading CSV: {str(e)}")
+        raise
 
 
-def load_html(file_path):
-    """
-    Load an HTML file and extract text content.
+def load_txt(path):
+    """Load text from a .txt file."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return [f.read()]
+    except Exception as e:
+        logger.error(f"Error loading text file: {str(e)}")
+        raise
 
-    :param file_path: str, path to the HTML file
-    :return: str, extracted text content
-    :example:
-    >>> load_html('data/comments.html')[:100]
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
-    with open(file_path, "r") as file:
-        from bs4 import BeautifulSoup
 
-        soup = BeautifulSoup(file, "html.parser")
-        return soup.get_text()
+# TODO: Implement load_json and load_html functions with the same load_csv structure

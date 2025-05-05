@@ -1,54 +1,47 @@
-import re
-from nltk.tokenize import word_tokenize, TweetTokenizer
+"""Multilingual text tokenization with NLTK."""
+
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, SnowballStemmer
+from textpipe.config.nltk import download_nltk_resources
+
+download_nltk_resources()
 
 
-def basic_tokenizer(text):
+def tokenize(text, config):
     """
-    Tokenizes text by:
-    - Lowercasing
-    - Splitting contractions via apostrophes
-    - Preserving @ and # symbols
-    - Splitting on spaces
+    Tokenize text with optional stopword removal and stemming.
+    Supports multiple languages (for stopwords and stemming).
 
-    :param str text: Input text to tokenize
-    :return: List of tokens
-    :rtype: list
+    Args:
+        text: Cleaned text string
+        config: Config object with attributes:
+            - language: Language code (e.g., 'english', 'french', etc.)
+            - remove_stopwords: bool
+            - use_stemming: bool
 
-    Example:
-        >>> basic_tokenizer("Python's great, isn't it?")
-        ['python', 's', 'great', 'isn', 't', 'it']
+    Returns:
+        List of processed tokens
     """
-    text = text.lower()
-    text = re.sub(r"['’]", " ", text)  # Split contractions
-    text = re.sub(r"[^\w\s@#]", "", text)  # Remove unwanted chars
-    return text.split()
+    tokens = word_tokenize(text, language=config.language)
 
+    # Remove stopwords
+    if config.remove_stopwords:
+        try:
+            stop_words = set(stopwords.words(config.language))
+            tokens = [t for t in tokens if t.lower() not in stop_words]
+        except OSError:
+            raise ValueError(f"Stopwords not available for language: {config.language}")
 
-def nltk_tokenizer(text):
-    """
-    Tokenizes text using NLTK's word_tokenize with pre-configured resources.
+    # Apply stemming
+    if config.use_stemming:
+        try:
+            if config.language.lower() == "english":
+                stemmer = PorterStemmer()
+            else:
+                stemmer = SnowballStemmer(config.language.lower())
+            tokens = [stemmer.stem(t) for t in tokens]
+        except ValueError:
+            raise ValueError(f"Stemming not supported for language: {config.language}")
 
-    :param str text: Input text to tokenize
-    :return: List of tokens
-    :rtype: list
-
-    Example:
-        >>> nltk_tokenizer("Hello, world!")
-        ['Hello', ',', 'world', '!']
-    """
-    return word_tokenize(text)
-
-
-def tweet_tokenizer(text):
-    """
-    Tokenizes text using NLTK's TweetTokenizer.
-
-    :param str text: Input text to tokenize
-    :return: List of tokens
-    :rtype: list
-
-    Example:
-        >>> tweet_tokenizer("Hello @user, check #Python!")
-        ['Hello', '@user', ',', 'check', '#Python', '!']
-    """
-    return TweetTokenizer().tokenize(text)
+    return tokens

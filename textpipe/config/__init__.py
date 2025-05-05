@@ -1,4 +1,4 @@
-from .nltk import configure_nltk
+from .nltk import download_nltk_resources
+from .config import Config
 
-
-__all__ = ["configure_nltk"]  # Public API
+__all__ = ["download_nltk_resources", "Config"]  # Public API

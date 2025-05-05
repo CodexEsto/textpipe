@@ -1,35 +1,31 @@
+"""Advanced text vectorization with TF-IDF and dimension reduction."""
+
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.decomposition import PCA
+from sklearn.decomposition import TruncatedSVD
 
 
-def vectorize_tfidf(texts, max_features=1000):
-    """
-    Convert a list of texts into TF-IDF vectors.
+class Vectorizer:
+    def __init__(self, max_features=1000, n_components = 25, ngram_range=(1, 2)):
+        # Validate max_features
+        if (
+            not (isinstance(max_features, int) and max_features > 0)
+            and max_features is not None
+        ):
+            raise ValueError(
+                f"'max_features' must be a positive integer or None. Got {type(max_features).__name__}: {max_features}"
+            )
 
-    :param texts: list, list of strings (texts)
-    :param max_features: int, max number of features to keep (default: 1000)
-    :return: np.ndarray, TF-IDF vectors
-    :example:
-    >>> vectorize_tfidf(["This is a comment", "Another comment"]).shape
-    (2, 7)
-    """
-    vectorizer = TfidfVectorizer(
-        max_features=max_features,
-        ngram_range=(1, 2),  # Key fix: include bigrams
-    )
-    return vectorizer.fit_transform(texts).toarray()
+        self.vectorizer = TfidfVectorizer(
+            max_features=max_features, ngram_range=ngram_range, stop_words=None
+        )
+        self.reducer = TruncatedSVD(n_components=n_components)
 
+    def fit_transform(self, texts):
+        if not all(isinstance(text, str) for text in texts):
+            raise ValueError("All elements in 'texts' must be strings.")
+        tfidf = self.vectorizer.fit_transform(texts)
+        return self.reducer.fit_transform(tfidf)
 
-def reduce_dimensions(vectors, n_components=2):
-    """
-    Reduce dimensionality of feature vectors using PCA.
-
-    :param vectors: np.ndarray, vectorized data
-    :param n_components: int, number of principal components to keep
-    :return: np.ndarray, reduced vectors
-    :example:
-    >>> reduce_dimensions(np.array([[1, 2, 3], [4, 5, 6]]))
-    array([[-1.5, -0.5], [1.5, 0.5]])
-    """
-    pca = PCA(n_components=n_components)
-    return pca.fit_transform(vectors)
+    def transform(self, texts):
+        tfidf = self.vectorizer.transform(texts)
+        return self.reducer.transform(tfidf)
