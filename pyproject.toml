@@ -1,9 +1,9 @@
 [project]
-name = "textpipe"
+name = "Textpipe"
 version = "0.1.0"
-description = "all in one tool for text tokenization and vectorization"
+description = "all in one tool for text processing"
 authors = [
-  { name="CodexEsto", email="codexesto@gmail.com" }
+  { name="Textpipe Team", email="codexesto@gmail.com" }
 ]
 requires-python = ">=3.7"
 dependencies = [

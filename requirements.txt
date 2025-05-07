@@ -5,3 +5,5 @@ pandas
 bs4
 requests
 numpy
+nltk
+sphinx
