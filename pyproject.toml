@@ -3,8 +3,9 @@ name = "Textpipe"
 version = "0.1.2"
 description = "All-in-one tool for text processing"
 readme = { file = "README.md", content-type = "text/markdown" }
-license = "MIT"
-authors = [{ name = "Textpipe Team", email = "codexesto@gmail.com" }]
+authors = [
+  { name = "Textpipe Team", email = "codexesto@gmail.com" }
+]
 requires-python = ">=3.7"
 dependencies = [
   "scikit-learn",
@@ -22,7 +23,7 @@ classifiers = [
   "Intended Audience :: Developers",
   "Natural Language :: English"
 ]
-urls = { "Homepage" = "https://github.com/CodexEsto/textpipe" }
+
 
 [build-system]
 requires = ["setuptools>=61.0"]
@@ -30,3 +31,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["textpipe*"]
+

@@ -48,3 +48,11 @@ clean:
 	find . -type f \( -name '*.log' -o -name '.coverage' -o -name '*.pdb' \) -delete
 
 .PHONY: test test-file coverage lint format docs clean
+
+# === Publishing ===
+uploadtest:
+	python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+
+release:
+	python3 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
