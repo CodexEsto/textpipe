@@ -9,3 +9,8 @@ __pycache__/
 
 # VS Code settings
 .vscode/
+
+# build
+build/
+dist/
+*.egg-info/
