@@ -3,7 +3,7 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, SnowballStemmer
-from textpipe.config.nltk import download_nltk_resources
+from codextextpipe.config.nltk import download_nltk_resources
 
 download_nltk_resources()
 

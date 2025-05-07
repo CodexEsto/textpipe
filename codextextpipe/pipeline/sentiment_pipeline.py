@@ -1,9 +1,9 @@
-"""Text classification pipeline for category prediction using similar components as sentiment analysis."""
+"""Sentiment analysis pipeline using text cleaning, tokenization, vectorization, and classification."""
 
-from textpipe.data import clean_text, tokenize
-from textpipe.data.vectorizer import Vectorizer
-from textpipe.core.classifier import TextClassifier
-from textpipe.data.model_io import (
+from codextextpipe.data import clean_text, tokenize
+from codextextpipe.data.vectorizer import Vectorizer
+from codextextpipe.core.classifier import TextClassifier
+from codextextpipe.data.model_io import (
     save_model,
     load_model,
     save_vectorizer,
@@ -11,25 +11,25 @@ from textpipe.data.model_io import (
 )
 
 
-class CategoryPipeline:
+class SentimentPipeline:
     """
-    A pipeline for text classification into categories or topics.
+    A pipeline for end-to-end sentiment analysis.
 
-    This pipeline processes input texts and trains a classifier to categorize them
-    into predefined labels such as "Technology", "Business", "Education", etc.
+    This class performs preprocessing (cleaning, tokenizing, vectorizing) and trains a classifier
+    to predict sentiment (e.g., positive, negative, neutral) for given text inputs.
 
     Attributes:
-        config (object): Configuration object with processing options.
-        vectorizer (Vectorizer): Text vectorizer.
-        classifier (TextClassifier): Text classifier.
+        config (object): Configuration object with language and processing options.
+        vectorizer (Vectorizer): Converts text into numerical features.
+        classifier (TextClassifier): Trained model to predict sentiment.
     """
 
     def __init__(self, config):
         """
-        Initialize the category classification pipeline.
+        Initialize the pipeline with configuration and components.
 
         Args:
-            config (object): Configuration containing language and processing settings.
+            config (object): A configuration object containing processing options.
         """
         self.config = config
         max_features = config.processing.get("max_features", 5000)
@@ -41,10 +41,10 @@ class CategoryPipeline:
         Preprocess a list of raw texts by cleaning, tokenizing, and vectorizing.
 
         Args:
-            texts (list of str): Input raw texts.
+            texts (list of str): Raw text inputs.
 
         Returns:
-            ndarray: Vectorized representation of the texts.
+            ndarray: Vectorized form of input texts.
         """
         cleaned = [clean_text(t, self.config) for t in texts]
         tokenized = [" ".join(tokenize(t, self.config)) for t in cleaned]
@@ -52,24 +52,24 @@ class CategoryPipeline:
 
     def train(self, texts, labels):
         """
-        Train the classifier to categorize texts.
+        Train the sentiment classifier.
 
         Args:
-            texts (list of str): Training examples.
-            labels (list of str): Corresponding category labels.
+            texts (list of str): Training text samples.
+            labels (list of str or int): Corresponding sentiment labels.
         """
         X = self.preprocess(texts)
         self.classifier.train(X, labels)
 
     def predict(self, texts):
         """
-        Predict categories for new input texts.
+        Predict sentiment for a list of new texts.
 
         Args:
-            texts (list of str): Raw texts to classify.
+            texts (list of str): Raw text inputs to classify.
 
         Returns:
-            list: Predicted category labels.
+            list: Predicted sentiment labels.
         """
         cleaned = [clean_text(t, self.config) for t in texts]
         tokenized = [" ".join(tokenize(t, self.config)) for t in cleaned]

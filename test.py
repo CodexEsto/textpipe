@@ -1,12 +1,12 @@
-from textpipe.data.model_io import (
+from codextextpipe.data.model_io import (
     save_model,
     load_model,
     save_vectorizer,
     load_vectorizer,
 )
-from textpipe.core.recommender import ContentRecommender
-from textpipe.pipeline import SuggestionPipeline
-from textpipe.config import Config
+from codextextpipe.core.recommender import ContentRecommender
+from codextextpipe.pipeline import SuggestionPipeline
+from codextextpipe.config import Config
 
 # Load the configuration
 config = Config.get()

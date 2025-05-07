@@ -1,7 +1,7 @@
 """Configured logger with proper handlers."""
 
 import logging
-from textpipe.config.config import Config
+from codextextpipe.config.config import Config
 
 logger = logging.getLogger("textpipe")
 logger.setLevel(Config.get().logging["level"])

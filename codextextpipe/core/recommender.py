@@ -1,6 +1,6 @@
 import numpy as np
-from textpipe.data.vectorizer import Vectorizer
-from textpipe.data.cleaner import clean_text
+from codextextpipe.data.vectorizer import Vectorizer
+from codextextpipe.data.cleaner import clean_text
 
 class ContentRecommender:
     def __init__(self, max_features=5000, n_components = 25,ngram_range=(1, 2)):

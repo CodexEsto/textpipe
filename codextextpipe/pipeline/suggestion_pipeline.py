@@ -1,8 +1,8 @@
 """Pipeline for generating content-based text recommendations."""
 
-from textpipe.data import clean_text
-from textpipe.core.recommender import ContentRecommender
-from textpipe.data.model_io import (
+from codextextpipe.data import clean_text
+from codextextpipe.core.recommender import ContentRecommender
+from codextextpipe.data.model_io import (
     save_model,
     load_model,
     save_vectorizer,
